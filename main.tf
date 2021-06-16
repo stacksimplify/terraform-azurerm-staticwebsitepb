@@ -33,13 +33,3 @@ resource "azurerm_storage_account" "storage_account" {
   }
 }
 
-
-# Upload Static Content to Azure Storage Container $web
-resource "null_resource" "uploadfilesweb" {
-  triggers = {
-    always-update =  timestamp()
-  }
-  provisioner "local-exec" {
-    command = "az storage blob upload-batch --no-progress --account-name ${azurerm_storage_account.storage_account.name} -s ${var.static_website_source_folder} -d '$web' --output none"
-  }
-}
